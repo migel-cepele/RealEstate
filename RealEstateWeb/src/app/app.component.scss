@@ -1,0 +1,19 @@
+.app-menu {
+  display: flex;
+  gap: 1.5rem;
+  background: var(--primary-color, #1976d2);
+  padding: 1rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+}
+.app-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+.app-menu a.active,
+.app-menu a:hover {
+  color: var(--accent-color, #ff4081);
+}

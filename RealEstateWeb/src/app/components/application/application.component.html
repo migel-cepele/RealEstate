@@ -1,0 +1,12 @@
+
+
+<div class="application-grid">
+  <div class="application-card" *ngFor="let app of applications">
+    <h3>{{ app.firstName }} {{ app.lastName }}</h3>
+    <p><strong>Email:</strong> {{ app.email }}</p>
+    <p><strong>Phone:</strong> {{ app.phoneNo }}</p>
+    <p><strong>Offer Amount:</strong> {{ app.offerAmount }}</p>
+    <p><strong>Description:</strong> {{ app.description }}</p>
+    <p><strong>House ID:</strong> {{ app.houseId }}</p>
+  </div>
+</div>

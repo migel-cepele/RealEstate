@@ -1,0 +1,119 @@
+###############
+# .NET (Visual Studio)
+###############
+
+## Build results
+bin/
+obj/
+out/
+[Bb]uild/
+[Ll]og/
+*.log
+
+## VS project files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## VS environment
+.vs/
+.vscode/
+
+## Other project system files
+*.pidb
+*.svclog
+*.scc
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+## Rider
+.idea/
+
+## User secrets
+**/secrets.json
+
+## NuGet packages
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+## dotCover
+*.dotCover
+
+## StyleCop
+StyleCopReport.xml
+
+## Azure
+.publish/
+AzurePackage/
+
+## EF Migrations
+Migrations/
+
+## Test Results
+TestResults/
+*.VisualState.xml
+*.cache
+*.coverage
+*.coveragexml
+
+## Others
+*.dbmdl
+*.bak
+*.sql
+*.mdf
+*.ldf
+
+###############
+# Node / Angular
+###############
+
+## Angular build
+dist/
+tmp/
+out-tsc/
+.angular/
+
+## Angular dependencies
+node_modules/
+
+## Compiled files
+*.js
+*.tsbuildinfo
+*.map
+
+## Environment files
+src/environments/environment*.ts
+
+## Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+## IDEs and editors
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+
+## OS-generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+## Others
+*.bak
+*.tmp
+*.swp
+*.orig

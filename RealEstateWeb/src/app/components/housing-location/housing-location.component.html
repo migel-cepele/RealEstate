@@ -1,0 +1,14 @@
+<section class="listing">
+    <img 
+      class="listing-photo" 
+      [src]="housingLocation().photo ? housingLocation().photo : (housingLocation().photoLocal ? ('data:image/jpeg;base64,' + housingLocation().photoLocal) : '')" 
+      alt="Example photo of {{ housingLocation().name }}" 
+      crossorigin />
+    <h2 class="listing-heading">{{ housingLocation().name }}</h2>
+    <p class="listing-location">{{ housingLocation().city }}</p>
+    <a [routerLink]="['/details', housingLocation().id]" class="details-link">View Details</a>
+</section>
+<!-- 
+Ketu eshte nje shembul i interpolation ne Angular, e cila lejon te shfaqim vlera te variablave ne template.
+Ne natyre do te thote te vendosesh dicka te nje natyre te ndryshme in dicka tjeter.
+-->

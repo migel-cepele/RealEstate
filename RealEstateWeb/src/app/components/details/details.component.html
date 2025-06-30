@@ -1,0 +1,63 @@
+<article>
+    <img [src]="housingLocation.photo ? housingLocation.photo : (housingLocation.photoLocal ? ('data:image/jpeg;base64,' + housingLocation.photoLocal) : '')" alt="External photo of {{ housingLocation.name }}" crossorigin class="listing-photo"/>
+    <section class="listing-description">
+        <h2 class="listing-heading">{{ housingLocation.name }}</h2>
+        <p class="listing-location">{{ housingLocation.city }}, {{housingLocation.state}}</p>
+    </section>
+    <section class="listing-features">
+        <h2 class="section-heading">About this housing location</h2>
+        <ul>
+            <li>Units available: {{ housingLocation.availableUnits }}</li>
+            <li>Does this location have wifi: {{ housingLocation.wifi }}</li>
+            <li>Does this location have laundry: {{ housingLocation.laundry }}</li>
+        </ul>
+    </section>
+    <section class="listing-apply">
+        <h2 class="section-heading">Apply now to live here</h2>
+        <form [formGroup]="applyForm" (submit)="submitApplication()">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" formControlName="firstName"/>
+            <div *ngIf="applyForm.get('firstName')?.touched && applyForm.get('firstName')?.errors as errors" class="error-message">
+              <span *ngIf="errors['required']">First name is required.</span>
+              <span *ngIf="errors['pattern']">First name must contain only letters.</span>
+            </div>
+
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" formControlName="lastName"/>
+            <div *ngIf="applyForm.get('lastName')?.touched && applyForm.get('lastName')?.errors as errors" class="error-message">
+              <span *ngIf="errors['required']">Last name is required.</span>
+              <span *ngIf="errors['pattern']">Last name must contain only letters.</span>
+            </div>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email"/>
+            <div *ngIf="applyForm.get('email')?.touched && applyForm.get('email')?.errors as errors" class="error-message">
+              <span *ngIf="errors['required']">Email is required.</span>
+              <span *ngIf="errors['email']">Please enter a valid email address.</span>
+            </div>
+
+            <label for="phone-nr">Phone Number</label>
+            <input type="text" id="phone-nr" formControlName="phoneNr"/>
+            <div *ngIf="applyForm.get('phoneNr')?.touched && applyForm.get('phoneNr')?.errors as errors" class="error-message">
+              <span *ngIf="errors['required']">Phone number is required.</span>
+              <span *ngIf="errors['pattern']">Please enter a valid phone number.</span>
+            </div>
+
+            <label for="offer-amount">Offer Amount</label>
+            <input type="number" id="offer-amount" formControlName="offerAmount"/>
+            <div *ngIf="applyForm.get('offerAmount')?.touched && applyForm.get('offerAmount')?.errors as errors" class="error-message">
+              <span *ngIf="errors['required']">Offer amount is required.</span>
+              <span *ngIf="errors['pattern']">Please enter a valid amount.</span>
+            </div>
+
+            <label for="description">Description</label>
+            <textarea id="description" formControlName="description" maxlength="500"></textarea>
+            <div *ngIf="applyForm.get('description')?.touched && applyForm.get('description')?.errors as errors" class="error-message">
+              <span *ngIf="errors['maxlength']">Description cannot exceed 500 characters.</span>
+            </div>
+
+            <button type="submit" class="primary">Apply now</button>
+        </form>
+
+    </section>
+</article>
