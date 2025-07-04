@@ -1,0 +1,45 @@
+﻿RealEstate.API
+
+1. Arkitektura
+Projekti eshte ndertuar bazuar ne nje version konceptual me te thjeshtuar te clean architecture, por qe perfaqson mjaftueshem
+parimet dhe konceptet kryesore te arkitektures.
+	1.1 Folderi 'Application' 
+		Perfaqson projektin Application ne nje version te detajuar te arkitektures. Ky folder do te menaxhoj logjiken
+		kryesore te aplikacionit. Ketu do te jene te implementuara use cases te ndryshme qe do te mundesoj aplikacioni, te cilat do te jene
+		si metoda brenda services ose ne klasa te vecanta.
+		Per cdo entitet ne databaze do te jete nje interface repository ne folderin 'Interfaces' qe do te percaktoj te gjitha metodat pjese 
+		logjike te ketij entiteti. Keto metoda implementohen me kode ne 'Infrastructure' folder.
+		'Services' folder do te ruaj te gjithe services ne projekt. Brenda ketyre services do te implementohet e gjithe logjika e application.
+		Services mund te nderthuren me njeri tjetrin ne varesi te uses cases qe do te perfaqsojne.
+		Folderi 'DTO' do te permbaj entitete te ndryshme qe do te perdoren per tu transferuar ne projektin web ne menyre te kostumizuar,
+		ne menyre qe te reduktohet sasia e informacionit te transmetuar dhe te hiqen properties e panevojshme.
+		Folder 'Common' do te permbaj disa objekte qe do te perdoren ne shume raste ne applikacion. Te tilla jane 'Pagination' per te 
+		implementuar pagination ne fetch queries te objekteve, 'OperationResult' per te dhene nje info pas exe te metodave dhe konstante
+		te ndryshme ne varesi te application logic and requirements. Keto konstante ne nje alternative tjeter do te ruheshin ne databaze,
+		por per arsue mirembajtje dhe kompleksiteti i panevojshem per menjanuar nje layer tjeter me konfigurime dhe pune, duke i ruajtur
+		direkt ne aplikacion.
+		File 'DependencyInjection' do te sherbej te te regjistruar services ne DI te applikacionit. Metoda e regjistrimit te services do te
+		thirret ne 'Program.cs' te applikacionit per te regjistruar services ne app startup.
+
+	1.2 Folderi 'Domain'
+		Do te ruaj te gjithe modelet e entiteteve te aplikacionit. Keto modele duhet te percaktojne ekzaktesisht me strukturen e tabelave
+		ne databaze. Cdo ndryshim ne strukturen e tabelave ne databaze duhet te reflektohet me ndryshimin e modelit ne kete folder.
+
+	1.3 Folderi 'Infrastructure'
+		Do te perdoret per implementimin e metodave te percaktuar ne interface repositories per cdo entitet. Keto do te jene ne folderin
+		'Repositories'.
+		Folderi 'Data' do te permbaje konfigurimin e databazes, si dhe implementimin e DbContext.
+
+	1.4 Pjesa tjeter e folders
+		Keto folders do ti perkasin projektit logjik te API, i cili do te permbaj vetem 'Controllers' momentalisht dhe 'Endpoints'. 
+		Folderi endpoints permban endpoints normale si ne folderin controllers, por qe nuk jane te grupuar ne entitete, sepse jane
+		me te pergjitshme dhe do te perdoret si folder per te testuar nje teknologji me te shpejt per te implementuar endpoints.
+
+2. Use Cases
+	... per tu implementuar
+
+3. Endpoints
+	... per tu implementuar
+
+
+

@@ -1,4 +1,4 @@
-namespace RealEstate.Domain
+namespace RealEstate.API.Domain
 {
     public class UserApplication
     {

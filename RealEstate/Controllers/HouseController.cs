@@ -1,32 +1,32 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RealEstate.Application.Interfaces;
-using RealEstate.Domain;
+using RealEstate.API.Application.Services;
+using RealEstate.API.Domain;
 
-namespace RealEstate.Controllers
+namespace RealEstate.API.Controllers
 {
     [Route("api/house")]
     [ApiController]
     public class HouseController : ControllerBase
     {
-        private readonly IHouseService _locationService;
+        private readonly HouseService _houseService;
 
-        public HouseController(IHouseService locationService)
+        public HouseController(HouseService houseService)
         {
-            _locationService = locationService;
+            _houseService = houseService;
         }
 
         [HttpGet]
-        public IActionResult GetLocations()
+        public IActionResult GetHouses()
         {
-            var houses = _locationService.GetHouses();
+            var houses = _houseService.GetHouses();
             return Ok(houses);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetHouseById(int id)
         {
-            var house = _locationService.GetHouseById(id);
+            var house = _houseService.GetHouseById(id);
             if (house == null)
                 return NotFound();
             return Ok(house);
@@ -35,10 +35,18 @@ namespace RealEstate.Controllers
         [HttpPost]
         public IActionResult AddHouse([FromBody] House house)
         {
-            var result = _locationService.AddHouse(house);
+            var result = _houseService.AddHouse(house);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);
+        }
+        
+        [HttpPost("filter")]
+        public IActionResult GetHousesByFilter([FromBody] Dictionary<string, string> filters)
+        {
+            var houses = _houseService.Filter(filters);
+            return Ok(houses);
+
         }
     }
 }

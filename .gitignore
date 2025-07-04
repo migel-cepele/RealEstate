@@ -2,6 +2,9 @@
 # .NET (Visual Studio)
 ###############
 
+#custom files
+/theory.txt
+
 ## Build results
 bin/
 obj/

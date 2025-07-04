@@ -1,8 +1,7 @@
-using RealEstate.Data;
 using Microsoft.EntityFrameworkCore;
-using RealEstate.Infrastructure.Repositories;
-using RealEstate.Application.Interfaces;
-using RealEstate.Application.Services;
+using RealEstate.API.Application;
+using RealEstate.API.Infrastructure.Data;
+using FastEndpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,11 +28,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-// Register repository and service for DI
-builder.Services.AddScoped<HouseRepository>();
-builder.Services.AddScoped<IHouseService, HouseService>();
-builder.Services.AddScoped<ApplicationRepository>();
-builder.Services.AddScoped<IApplicationService, ApplicationService>();
+// DI for repositories and services
+builder.Services.AddApplicationServices();
+
+//fast endpoints library
+builder.Services.AddFastEndpoints();
 
 var app = builder.Build();
 
@@ -52,5 +51,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseFastEndpoints();
 
 app.Run();

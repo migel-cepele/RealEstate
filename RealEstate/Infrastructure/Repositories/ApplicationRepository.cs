@@ -1,9 +1,10 @@
-using RealEstate.Domain;
-using RealEstate.Data;
+using RealEstate.API.Domain;
+using RealEstate.API.Infrastructure.Data;
+using RealEstate.API.Application.Interfaces;
 
-namespace RealEstate.Infrastructure.Repositories
+namespace RealEstate.API.Infrastructure.Repositories
 {
-    public class ApplicationRepository
+    public class ApplicationRepository : IApplicationRepository
     {
         private readonly AppDbContext _context;
 
@@ -12,10 +13,10 @@ namespace RealEstate.Infrastructure.Repositories
             _context = context;
         }
 
-        public void AddApplication(UserApplication application)
+        public async Task AddApplicationAsync(UserApplication application)
         {
-            _context.UserApplications.Add(application);
-            _context.SaveChanges();
+            await _context.UserApplications.AddAsync(application);
+            await _context.SaveChangesAsync();
         }
 
         public List<UserApplication> GetApplications()

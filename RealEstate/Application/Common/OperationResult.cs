@@ -1,4 +1,4 @@
-namespace RealEstate.Common
+namespace RealEstate.API.Application.Common
 {
     public class OperationResult
     {

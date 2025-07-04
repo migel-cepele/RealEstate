@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
-using RealEstate.Application.Interfaces;
-using RealEstate.Domain;
+using RealEstate.API.Application.Services;
+using RealEstate.API.Domain;
 
-namespace RealEstate.Controllers
+namespace RealEstate.API.Controllers
 {
     [Route("api/application")]
     [ApiController]
     public class ApplicationController : ControllerBase
     {
-        private readonly IApplicationService _applicationService;
+        private readonly ApplicationService _applicationService;
 
-        public ApplicationController(IApplicationService applicationService)
+        public ApplicationController(ApplicationService applicationService)
         {
             _applicationService = applicationService;
         }

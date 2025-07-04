@@ -1,24 +1,25 @@
-using RealEstate.Application.Interfaces;
-using RealEstate.Domain;
-using RealEstate.Infrastructure.Repositories;
-using RealEstate.Common;
+using RealEstate.API.Application.Interfaces;
+using RealEstate.API.Domain;
+using RealEstate.API.Application.Common;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace RealEstate.Application.Services
+namespace RealEstate.API.Application.Services
 {
-    public class ApplicationService : IApplicationService
+    public class ApplicationService
     {
-        private readonly ApplicationRepository _repository;
+        private readonly IApplicationRepository _repository;
 
-        public ApplicationService(ApplicationRepository repository)
+        public ApplicationService(IApplicationRepository repository)
         {
             _repository = repository;
         }
 
-        public OperationResult AddApplication(UserApplication application)
+        public async Task<OperationResult> AddApplicationAsync(UserApplication application)
         {
             try
             {
-                _repository.AddApplication(application);
+                await _repository.AddApplicationAsync(application);
                 return OperationResult.Ok("Application submitted successfully.");
             }
             catch (Exception ex)

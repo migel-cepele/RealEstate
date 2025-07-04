@@ -1,15 +1,14 @@
-﻿using RealEstate.Application.Interfaces;
-using RealEstate.Domain;
-using RealEstate.Infrastructure.Repositories;
-using RealEstate.Common;
+﻿using RealEstate.API.Application.Interfaces;
+using RealEstate.API.Domain;
+using RealEstate.API.Application.Common;
 
-namespace RealEstate.Application.Services
+namespace RealEstate.API.Application.Services
 {
-    public class HouseService : IHouseService
+    public class HouseService
     {
-        private readonly HouseRepository _repository;
+        private readonly IHouseRepository _repository;
 
-        public HouseService(HouseRepository repository)
+        public HouseService(IHouseRepository repository)
         {
             _repository = repository;
         }
@@ -38,6 +37,11 @@ namespace RealEstate.Application.Services
         public House? GetHouseById(int id)
         {
             return _repository.GetHouseById(id);
+        }
+
+        public List<House> Filter(Dictionary<string, string> keyValues)
+        {
+            return _repository.Filter(keyValues);
         }
     }
 }
