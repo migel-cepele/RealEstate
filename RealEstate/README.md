@@ -1,7 +1,3 @@
-Certainly! Here’s a complete, professional, and English-translated README.md for your RealEstate project. This README incorporates all the information from theory.txt (translated from Albanian), adds technology and configuration details, and presents a structured, developer-friendly document.
-
----
-
 # RealEstateAPI
 
 **Web application with .NET Core 8.0 API and Angular v18**
