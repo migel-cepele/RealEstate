@@ -55,9 +55,9 @@ namespace RealEstate.API.Application.Services
             }
         }
 
-        public PaginationResult<Item> Filter(int pageNumber, int pageSize, Dictionary<string, string> keyValues)
+        public PaginationResult<Item> Filter(int pageNumber, int pageSize, long lastId, Dictionary<string, string> keyValues)
         {
-            return _itemRepository.Filter(pageNumber, pageSize, keyValues);
+            return _itemRepository.Filter(pageNumber, pageSize, lastId, keyValues);
         }
 
         public List<ItemClientsHistoryDto>? GetItemClientsHistory(long itemId)
@@ -67,7 +67,7 @@ namespace RealEstate.API.Application.Services
             foreach (var itemClient in itemClients)
             {
                 var client = _clientRepository.GetById(itemClient.ClientId);
-                if(client == null)
+                if (client == null)
                 {
                     continue; // Skip if client not found
                 }
@@ -89,6 +89,6 @@ namespace RealEstate.API.Application.Services
                 });
             }
             return itemClientsHistory;
-        }
+        }       
     }
 }

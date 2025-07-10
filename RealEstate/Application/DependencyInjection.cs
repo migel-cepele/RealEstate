@@ -24,6 +24,9 @@ namespace RealEstate.API.Application
             services.AddScoped<ClientService>();
             services.AddScoped<UserService>();
             services.AddScoped<ClientItemService>();
+            services.AddScoped<LoanService>();
+            services.AddScoped<ItemStatisticsService>();
+            services.AddScoped<ClientStatisticsService>();
 
             return services;
         }

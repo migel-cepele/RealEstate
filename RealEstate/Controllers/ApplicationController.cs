@@ -16,9 +16,9 @@ namespace RealEstate.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddApplication([FromBody] UserApplication application)
+        public async Task<IActionResult> AddApplication([FromBody] UserApplication application)
         {
-            var result = _applicationService.AddApplication(application);
+            var result = await _applicationService.AddApplicationAsync(application);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);

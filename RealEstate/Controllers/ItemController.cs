@@ -60,9 +60,9 @@ namespace RealEstate.API.Controllers
         }
 
         [HttpPost("filter")]
-        public IActionResult Filter([FromBody] Dictionary<string, string> keyValues, int pageNumber, int pageSize)
+        public IActionResult Filter(int pageNumber, int pageSize, long lastId, [FromBody] Dictionary<string, string> keyValues)
         {
-            var items = _itemService.Filter(pageNumber, pageSize, keyValues);
+            var items = _itemService.Filter(pageNumber, pageSize, lastId, keyValues);
             return Ok(items);
         }
     }

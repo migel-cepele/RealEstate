@@ -2,9 +2,10 @@
 {
     public static class PropertyType
     {
+        public static readonly string House = nameof(House);
         public static readonly string SingleFamilyHome = nameof(SingleFamilyHome);
         public static readonly string Apartment = nameof(Apartment);
-        public static readonly string Condominium = nameof(Condominium);
+        public static readonly string Condo = nameof(Condo);
         public static readonly string Townhouse = nameof(Townhouse);
         public static readonly string Duplex = nameof(Duplex);
         public static readonly string ManufacturedHome = nameof(ManufacturedHome);

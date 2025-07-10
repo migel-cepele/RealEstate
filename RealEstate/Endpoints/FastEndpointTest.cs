@@ -4,6 +4,7 @@ namespace RealEstate.API.Endpoints
 {
     public class FastEndpointTest : EndpointWithoutRequest<FastEndpointTestResponse>
     {
+        //nuk duhet te kete germa te medha ne url.
         public override void Configure()
         {
             Get("/fast-endpoint-test");

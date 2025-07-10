@@ -1,8 +1,9 @@
-using RealEstate.API.Domain;
-using RealEstate.API.Infrastructure.Data;
-using RealEstate.API.Application.Interfaces;
 using RealEstate.API.Application.Common;
 using RealEstate.API.Application.Common.Constants;
+using RealEstate.API.Application.Interfaces;
+using RealEstate.API.Domain;
+using RealEstate.API.Infrastructure.Data;
+using System.Linq.Expressions;
 
 namespace RealEstate.API.Infrastructure.Repositories
 {
@@ -35,9 +36,91 @@ namespace RealEstate.API.Infrastructure.Repositories
             }
         }
 
-        public PaginationResult<Client> Filter(int pageNumber, int pageSize, Dictionary<string, string> keyValues)
+        public PaginationResult<Client> Filter(int pageNumber, int pageSize, long lastId, Dictionary<string, string> keyValues)
         {
-            throw new NotImplementedException();
+            if(keyValues.Count > 0)
+            {
+                IQueryable<Client> query = _context.Clients;
+                var clientType = typeof(Client);
+
+                foreach (var keyValue in keyValues)
+                {
+                    var property = clientType.GetProperty(keyValue.Key);
+                    if (property == null) continue;
+
+                    //expression is used to build dynamic LINQ queries. For example here: h = > h.PropertyName == value
+                    var parameter = Expression.Parameter(typeof(Client), "h");
+                    var propertyAccess = Expression.Property(parameter, property);
+
+                    // vlera ne dictionary eshte gjithmone string, pavarsisht nese type i property mund te jete ndryshe
+                    // ketu behet konvertimi i type nga string ne ate qe duhet
+                    object? typedValue = null;
+                    try
+                    {
+                        if (property.PropertyType == typeof(byte[]))
+                        {
+                            continue;
+                        }
+                        else if (property.PropertyType == typeof(bool))
+                        {
+                            typedValue = bool.Parse(keyValue.Value);
+                        }
+                        else if (property.PropertyType.IsEnum)
+                        {
+                            typedValue = Enum.Parse(property.PropertyType, keyValue.Value);
+                        }
+                        else
+                        {
+                            typedValue = Convert.ChangeType(keyValue.Value, property.PropertyType);
+                        }
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+
+                    var constant = Expression.Constant(typedValue, property.PropertyType);
+                    var equal = Expression.Equal(propertyAccess, constant);
+                    var lambda = Expression.Lambda<Func<Client, bool>>(equal, parameter); //where eshte true ose jo
+                    query = query.Where(lambda);
+                }
+
+                var totalItems = query.Count();
+                var nextPage = query
+                    .OrderByDescending(x => x.Id)
+                    .Where(x => x.Id > lastId)
+                    .Take(pageSize);
+
+                 return new PaginationResult<Client>
+                 {
+                    Results = (List<Client>)nextPage,
+                    TotalCount = totalItems,
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    TotalPages = (int)Math.Ceiling((double)totalItems / pageSize)
+                 };
+            }
+            else
+            {
+                // If no filters are applied, return all clients with pagination
+                var totalItems = _context.Clients.Count();
+                var nextPage = _context.Clients
+                    .OrderByDescending(x => x.Id)
+                    .Where(x => x.Id > lastId)
+                    .Take(pageSize)
+                    .ToList();
+                
+
+                return new PaginationResult<Client>
+                {
+                    Results = nextPage,
+                    TotalCount = totalItems,
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    TotalPages = (int)Math.Ceiling((double)totalItems / pageSize)
+                };
+            }
+            
         }
 
         public void UpdateClientPriority(ClientItem clientItem, List<Client> allClients)
@@ -45,16 +128,20 @@ namespace RealEstate.API.Infrastructure.Repositories
             // Update the priority amount for the target client duke marre parasysh shumen e veprimit te fundit
             // te kryer nga klienti.
             var targetClient = allClients.FirstOrDefault(c => c.Id == clientItem.ClientId);
+            
             if (targetClient != null)
             {
-                if (clientItem.Status == SaleType.ForSale)
+                decimal cpa = targetClient.PriorityAmount ?? 0;
+
+                if (clientItem.Status == ItemStatus.Sold)
                 {
-                    targetClient.PriorityAmount += clientItem.Price * Priority.Sold;
+                    cpa += clientItem.Price * Priority.Sold;
                 }
-                else if (clientItem.Status == SaleType.ForRent)
+                else if (clientItem.Status == ItemStatus.Rented)
                 {
-                    targetClient.PriorityAmount += clientItem.Price * Priority.Rented;
+                    cpa += clientItem.Price * Priority.Rented;
                 }
+                targetClient.PriorityAmount = cpa;
             }
 
             // Sort all clients by PriorityAmount descending

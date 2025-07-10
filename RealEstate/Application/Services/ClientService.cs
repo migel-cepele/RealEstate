@@ -57,9 +57,9 @@ namespace RealEstate.API.Application.Services
             }
         }
 
-        public PaginationResult<Client> Filter(int pageNumber, int pageSize, Dictionary<string, string> keyValues)
+        public PaginationResult<Client> Filter(int pageNumber, int pageSize, long lastId, Dictionary<string, string> keyValues)
         {
-            return _repository.Filter(pageNumber, pageSize, keyValues);
+            return _repository.Filter(pageNumber, pageSize, lastId, keyValues);
         }
 
         public List<ClientItemsHistoryDto>? GetClientItemsHistory(long clientId)

@@ -1,0 +1,6 @@
+﻿namespace RealEstate.API.Application.DTO
+{
+    public class ItemStatistics
+    {
+    }
+}

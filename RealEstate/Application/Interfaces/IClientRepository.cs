@@ -6,7 +6,7 @@ namespace RealEstate.API.Application.Interfaces
 {
     public interface IClientRepository : IBaseInterface<Client>
     {
-        PaginationResult<Client> Filter(int pageNumber, int pageSize, Dictionary<string, string> keyValues);
+        PaginationResult<Client> Filter(int pageNumber, int pageSize, long lastId, Dictionary<string, string> keyValues);
         void UpdateClientPriority(ClientItem clientItem, List<Client> allClients);
     }
 }

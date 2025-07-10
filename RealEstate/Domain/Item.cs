@@ -39,5 +39,6 @@ namespace RealEstate.API.Domain
         public bool? UtilitiesIncluded { get; set; }
         public decimal? WalkScore { get; set; }
         public string EnergyRating { get; set; }
+        public bool IsActive { get; set; }
     }
 }

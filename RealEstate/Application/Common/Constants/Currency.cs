@@ -2,6 +2,7 @@
 {
     public static class Currency
     {
+        public static readonly string ALL = nameof(ALL); // Albanian Lek
         public static readonly string USD = nameof(USD); // United States Dollar
         public static readonly string EUR = nameof(EUR); // Euro
         public static readonly string GBP = nameof(GBP); // British Pound Sterling

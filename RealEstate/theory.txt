@@ -36,10 +36,385 @@ parimet dhe konceptet kryesore te arkitektures.
 		me te pergjitshme dhe do te perdoret si folder per te testuar nje teknologji me te shpejt per te implementuar endpoints.
 
 2. Use Cases
-	... per tu implementuar
+	Use cases do te implementohen ne folderin 'Application' ne forma services ose metoda brenda services.
+	Use cases e applikacionit do te jete pjese konceptuale e entiteteve te aplikacionit, por qe mund te implementohen edhe ne
+	klasa te vecanta ne 'Services' folder, ne menyre qe services e entiteteve te jene me te thjeshta dhe te fokusuar.
+	Endpoints per keto use cases do te implementohen ne controllerin e entitetit perkates ose ne folderin endpoints ne rast se
+	jane me te kostumizuara ose me te vecanta. keshtu ne controller do te jene metoda standard per add, update, delete, getbyid,
+	getall dhe filter, ndersa cdo use case tjeter do te jete nje fast endpoint i vecante ne folderin 'Endpoints'. Kjo do te sherbej
+	per ta mbajtur me te paster controllerin dhe standard.
+	2.1 Item use cases
+		- CreateItem: Krijon nje item te ri ne databaze. Me ane te metodes Add.
+
+		- GetItem: Merr nje item nga databaza me id te dhene. Me ane te metodes GetById.
+
+		- UpdateItem: Përshtat nje item ekzistues ne databaze. Me ane te metodes Update.
+
+		- DeleteItem: Fshin nje item nga databaza me id te dhene. Me ane te metodes Delete.
+
+		- ListItems: Lista e te gjithe items ne databaze me mundesi pagination dhe filtrimi. Me ane te metodes GetAll dhe Filter.
+		- GetItemClientsHistory: per nje house te dhene do te merren te gjithe klientet qe kane blere ose rented kete shtepi. Kjo
+		  do te perdoret per te dhene ne info ne front mbi historikun e kesaj shtepie ne faqen perkatese. Informacioni qe do te
+		  kthehet nga kjo metode do te jete me ane te nje DTO me fushat per nje info me te zgjedhur per klientin:
+			FirstName
+			LastName
+			Email
+			PhoneNumber
+			IsActive
+			UpdatedAt
+			PriorityNo
+			SaleType
+			Price
+			Discount
+			Commission
+			PaymentMethod
+			Currency
+		  Dhe ketu do te implementohet pagination ne rast se nje shtepi ka shume klient te lidhur me te.
+		  Kjo do te implementohet si nje metode e vetme ne service te Item, e cila do te thirret nga fast end point, ne folderin
+		  'Item'.
+
+		  - GetItemFinancing: per nje house te dhene per sale, do te jete nje feature i cili mundeson te llogaritet pagesa me
+		  financim me kredi per nje shume te caktuar. Si parametra do te jepen shuma e kerkuar e kredise, interesi i kredise,
+		  pagesa mujore e deshiruar ose koha qe klienti do te shlyej kredine. Nga te fundit, vetem nje duhet te kete vlere.
+		  Me keto informacione do te ndertohet nje skedule kredie, me pagesen per cdo muaj deri ne 
+		  afatin qe duhet per te shlyer kredine.
+		  Fushat per info per kredine jane:
+		  LoanDto
+				Amount
+				InterestRate
+				TermMonths
+				StartDate
+				EndDate
+				MonthlyPayment
+				Currency
+				Installments - lista e LoanInstallment
+		   LoanInstallment
+				InstallmentNumber
+				Principal
+				Interest
+				TotalPayment
+				DueDate
+		Norma e interesit duhet te merret me ane te nje API te caktuar, per te reflektuar normat aktuale te interesit ne treg.
+		Por per arsye te mungeses se API nga bankat e nivelit te dyte dhe banka qendrore eshte e pamundur te sugjerohet nje norme
+		reale interesi per kredine. Ketu do e zgjidhim duke vendosur 2 norma te paracaktuara interesi, per monedhat EUR dhe ALL.
+		Keto vlera do te perdoren fillimisht ne aplikacion per te sugjeruar nje skedule kredie, por qe useri mund te ndryshoje sipas
+		informacioneve qe ka ne dispozicion. Ne te ardhmen do te implementohet nje API e jashtme, nqs do te ekzistoj.
+		Dhe kjo do te jete nje metode e vecante ne service te Item, e cila do te thirret nga fast end point, ne folderin Item.
+
+		- Item Statistics: per te gjithe items ne databaze do te kthehen statistikat e ndryshme si:
+		  - TotalItems: numri total i items ne databaze.
+		  - TotalItemsForSale: numri total i items qe jane per sale.
+		  - TotalItemsForRent: numri total i items qe jane per rent.
+		  - TotalItemsSold: numri total i items qe jane shitur.
+		  - TotalItemsRented: numri total i items qe jane rented. kto do te implementohen sipas nje periudhe.
+		  Periudhat do te kene disa opsione fikse ose me range datash te kostumizuar. Do te krijohet nje file me constant date ranges,
+		  me disa common date ranges:
+		  Today,
+		  Last24Hours,
+		  Last3Days,
+		  LastWeek,
+		  LastMonth,
+		  LastYear,
+		  Last5Years.
+		  - list ne nr e items te regjistruar per rent/sold/total per nje periudhe kohe.
+		  - list me nr e items sold/rent/total per nje periudhe kohe.
+		  - list me shumen e vleres per items sold/rent/total per nje periudhe kohe.
+		  - shtepia me cmimin max/min qe eshte shitur/rented.
+		item statistics do te implementohet si nje service i vecante.
+
+
+	2.2 Client use cases
+		- CreateClient: Krijon nje klient te ri ne databaze. Me ane te metodes Add.
+
+		- GetClient: Merr nje klient nga databaza me id te dhene. Me ane te metodes GetById.
+
+		- UpdateClient: Përshtat nje klient ekzistues ne databaze. Me ane te metodes Update.
+
+		- DeleteClient: Fshin nje klient nga databaza me id te dhene. Me ane te metodes Delete.
+
+		- ListClients: Lista e te gjithe klientëve ne databaze me mundesi pagination dhe filtrimi. Me ane te metodes GetAll dhe Filter.
+
+		- GetClientItemsHistory: per nje klient te dhene do te merren te gjithe items qe ka blere ose rented. Kjo do te perdoret
+		  per te dhene ne info ne front mbi historikun e klientit ne faqen perkatese. Informacioni qe do te kthehet nga kjo metode
+		  do te jete me ane te nje DTO me fushat per nje info me te zgjedhur per itemin:
+			Title
+			Price
+			Address
+			PropertyType
+			Status
+			UpdatedAt
+			SaleType
+			AcquiredDate
+			AcquiredPrice
+			Discount
+			Commission
+			PaymentMethod
+		  Dhe ketu do te implementohet pagination ne rast se nje klient ka shume items te lidhur me te.
+		  Kjo do te implementohet si nje metode e vetme ne service te Client, e cila do te thirret nga fast end point, ne folderin
+		  'Client'.
+
+		  - Client Statistics: per te gjithe klientet ne databaze do te kthehen statistikat e ndryshme si:
+			  - TotalClients: numri total i klientëve ne databaze.
+			  - TotalActiveClients: numri total i klientëve aktiv ne databaze.
+			  - TotalInactiveClients: numri total i klientëve jo aktiv ne databaze.
+			  - client qe ka shpenzuar me shume per rent/sale.
+			  - client qe ka shpenzuar me pak per rent/sale.
+			  - liste me datat dhe shumen qe nje klient ka blere/rented shtepi. - graf
+			  - graf me nr e klienteve te regjistruar ne nje periudhe.
+			  - liste me top x klientet me highest priority
+			  - liste me shumen e harxhuar nga keta x kliente per sale/rent/total.
+		   klient statistics do te implementohen si nje service i vecante me te gjitha metodat e nevojshme per use casen e mesiperm.
+
+	2.3 Client Item use cases
+		- kur nje klient te blej ose rent nje shtepi, do te update ne transaksion dhe prioriteti i tij me shumen e re.
+		- renting mund te behet inaktive me ane te nje metode. (per sale nuk ka kuptim sepse mund ta shesi nje agjenci tjeter,
+		por mund te kete raste qe klienti pasi blen nje shtepi, mund ta vendosi per shitje ne kete agjenci)
+		- gjithashtu per update do te lejohet te modifikohet ne rast gabimi.
+
+		- Add:
+		When a client rents or buys an item, a new ClientItem is created with the details of the transaction.
+		the items becomes inactive to be rented or sold again, but the ClientItem remains active.
+
+		- Inactive:
+		When a client leaves an item after he has rented it, or wants to sell again, the ClientItem record is marked as inactive, 
+		and the item becomes active again to be sold or rented, depending on the case.
+
+
 
 3. Endpoints
-	... per tu implementuar
+	3.1 Item
+		- GET /api/item: Merr listen e te gjithe items ne databaze.
+		- GET /api/item/{id}: Merr nje item nga databaza sipas id-se.
+		- POST /api/item: Shton nje item te ri ne databaze.
+		- PUT /api/item: Perditeson nje item ekzistues ne databaze.
+		- DELETE /api/item/{id}: Fshin nje item nga databaza sipas id-se.
+		- POST /api/item/filter: Filtron dhe kthen listen e items sipas parametrave te filtrimit dhe pagination.
+
+	3.2 Client
+		- GET /api/client: Merr listen e te gjithe klienteve ne databaze.
+		- GET /api/client/{id}: Merr nje klient nga databaza sipas id-se.
+		- POST /api/client: Shton nje klient te ri ne databaze.
+		- PUT /api/client: Perditeson nje klient ekzistues ne databaze.
+		- DELETE /api/client/{id}: Fshin nje klient nga databaza sipas id-se.
+		- POST /api/client/filter: Filtron dhe kthen listen e klienteve sipas parametrave te filtrimit dhe pagination.
+
+	3.3 ClientItem
+		- GET /api/client/item: Merr listen e te gjitha lidhjeve klient-item ne databaze.
+		- GET /api/client/item/{id}: Merr nje lidhje klient-item sipas id-se.
+		- POST /api/client/item: Shton nje lidhje te re klient-item ne databaze.
+		- PUT /api/client/item: Perditeson nje lidhje ekzistuese klient-item ne databaze.
+		- DELETE /api/client/item/{id}: Fshin nje lidhje klient-item nga databaza sipas id-se.
+
+	3.4 ItemStatistics
+		
+		- Parametri ItemStatus ose SaleType eshte opsional ne url e meposhtme
+		- -IsActive eshte optional, edhe mund te hiqet. Nese hiqet by default eshte true.
+		
+		1. Items added for a fixed interval
+		-returns nje dictionary me datat dhe nr e items te shtuar for sale ne ate date per nje interval kohor fiks
+		/api/item/statistics/added?SaleType=ForSale&TimeInterval=Today
+
+		-returns nje dictionary me datat dhe nr e items te shtuar for sale ne ate date per nje interval kohor fiks
+		/api/item/statistics/added?SaleType=ForRent&TimeInterval=Today
+
+		-returns nje dictionary me datat dhe nr e items te shtuar for sale or for rent ne ate date per nje interval kohor fiks
+		/api/item/statistics/added?TimeInterval=Today
+
+		2. Items added for a specific interval
+		- do te jepet nje dictionary me datat dhe nr e items te shtuar for sale ne ate date per nje interval kohor te percaktuar
+		/api/item/statistics/added/interval?SaleType=ForSale&StartDate=01/02/2025 12:30:15&EndDate=01/07/2025 13:25:56	
+		
+		- do te jepet nje dictionary me datat dhe nr e items te shtuar for rent ne ate date per nje interval kohor te percaktuar
+		/api/item/statistics/added/interval?SaleType=ForRent&StartDate=01/02/2025 12:30:15&EndDate=01/07/2025 13:25:56	
+
+		- do te jepet nje dictionary me datat dhe nr e items te shtuar for sale or for rent ne ate date per nje interval kohor te percaktuar
+		/api/item/statistics/added/interval?StartDate=01/02/2025 12:30:15&EndDate=01/07/2025 13:25:56	
+
+		3. Items price average		
+
+		- do te jepet cmimi mesatar i items for sale
+		/api/item/statistics/price/avg?SaleType=ForSale&IsActive=True
+
+		- do te jepet cmimi mesatar i items for rent
+		/api/item/statistics/price/avg?SaleType=ForRent&IsActive=True
+
+		- do te jepet cmimi mesatar i items for sale or for rent
+		/api/item/statistics/price/avg?IsActive=True
+
+		4. Items price max
+		-returns item(s) with max price for rent
+		/api/item/statistics/price/max?SaleType=ForRent&IsActive=true
+
+		-returns item(s) with max price for sale
+		/api/item/statistics/price/max?SaleType=ForSale&IsActive=true
+
+		-returns item(s) with max price for sale or for rent
+		/api/item/statistics/price/max?IsActive=true
+
+		5. Items price min
+		-returns item(s) me cmimin min qe jane for rent
+		/api/item/statistics/price/min?SaleType=ForRent&IsActive=true
+
+		-returns item(s) me cmimin min qe jane for sale
+		/api/item/statistics/price/min?SaleType=ForSale&IsActive=true
+
+		-returns item(s) me cmimin min qe jane for rent ose for sale
+		/api/item/statistics/price/min?IsActive=true
+
+		6. Items given
+		- return a dictionary with dates and no of items sold for each date in a fixed interval
+		/api/item/statistics/given?ItemStatus=Sold&TimeInterval=Today
+
+		- return a dictionary with dates and no of items rented for each date in a fixed interval
+		/api/item/statistics/given?ItemStatus=Rented&TimeInterval=Today
+
+		- return a dictionary with dates and no of items rented for each date in a fixed interval
+		/api/item/statistics/given?TimeInterval=Today
+
+		7. Items given for an interval
+		- like above, but for a specific interval
+		/api/item/statistics/given/interval?ItemStatus=Sold&StartDate=01/02/2025&EndDate=09/07/2025
+
+		- like above, but for a specific interval
+		/api/item/statistics/given/interval?ItemStatus=Rented&StartDate=01/02/2025&EndDate=09/07/2025
+
+		- like above, but for a specific interval
+		/api/item/statistics/given/interval?StartDate=01/02/2025&EndDate=09/07/2025
+
+		8. Items given sum
+		- returns a dictionary of dates and sum of items that are rented for each date in a fixed interval
+		/api/item/statistics/given/sum?ItemStatus=Rented&TimeInterval=Today
+
+		- returns a dictionary of dates and sum of items that are sold for each date in a fixed interval
+		/api/item/statistics/given/sum?ItemStatus=Sold&TimeInterval=Today
+
+		- returns a dictionary of dates and sum of items that are sold for each date in a fixed interval
+		/api/item/statistics/given/sum?TimeInterval=Today
+
+		9. Items given sum for an interval
+		- like above but for a specific interval
+		/api/item/statistics/given/sum/interval?ItemStatus=Rented&StartDate=01/07/2025&EndDate=09/07/2025
+
+		- like above but for a specific interval
+		/api/item/statistics/given/sum/interval?ItemStatus=Sold&StartDate=01/07/2025&EndDate=09/07/2025
+
+		- like above but for a specific interval
+		/api/item/statistics/given/sum/interval?StartDate=01/07/2025&EndDate=09/07/2025
+
+		10. Total items given number
+		- returns no of items rented for an interval
+		/api/item/statistics/total/given?ItemStatus=Rented&TimeInterval=Today
+
+		- returns no of items rented for an interval
+		/api/item/statistics/total/given?ItemStatus=Sold&TimeInterval=Today
+
+		- returns no of items rented for an interval
+		/api/item/statistics/total/given?TimeInterval=Today
+
+		11. no of Total items given for an interval
+		- like above but for a fixed interval
+		/api/item/statistics/total/given/interval?ItemStatus=Rented&TimeInterval=Today
+
+		- like above but for a fixed interval
+		/api/item/statistics/total/given/interval?ItemStatus=Sold&TimeInterval=Today
+
+		- like above but for a fixed interval
+		/api/item/statistics/total/given/interval?TimeInterval=Today
+
+		12. Total items available number
+		- returns no of total items for sale that are available
+		/api/item/statistics/total/available?SaleType=ForSale&TimeInterval=Today
+
+		- returns no of total items for rent that are available
+		/api/item/statistics/total/available?SaleType=ForRent&TimeInterval=Today
+
+		- returns no of total items for rent that are available
+		/api/item/statistics/total/available?TimeInterval=Today
+
+
+	3.5 ClientStatistics
+
+		1. Client price history
+		- the amount that a client has spent for buying, in a fixed interval, for each date in that interval
+		/api/client/statistics/price/history?ClientId=1&ItemStatus=Sold&TimeInterval=Today
+
+		- the amount that a client has spent for rent, in a fixed interval, for each date in that interval
+		/api/client/statistics/price/history?ClientId=1&ItemStatus=Rented&TimeInterval=Today
+
+		- the amount that a client has spent for buying and renting, in a fixed interval, for each date in that interval
+		/api/client/statistics/price/history?ClientId=1&TimeInterval=Today
+
+		2. Client price history interval
+		- like above but for a specific interval, for buying:
+		/api/client/statistics/price/history/interval?ClientId=1&ItemStatus=Sold&StartDate=01/07/2025&EndDate=09/07/2025
+
+		- like above but for a specific interval, for renting:
+		/api/client/statistics/price/history/interval?ClientId=1&ItemStatus=Rented&StartDate=01/07/2025&EndDate=09/07/2025
+
+		- like above but for a specific interval, for both:
+		/api/client/statistics/price/history/interval?ClientId=1&StartDate=01/07/2025&EndDate=09/07/2025
+
+		3. Client price max
+		- the client that has spent the most for rent:
+		/api/client/statistics/price/max?ItemStatus=Rented
+
+		- the client that has spent the most to buy:
+		/api/client/statistics/price/max?ItemStatus=Sold
+
+		- the client that has spent the most for rent and buying:
+		/api/client/statistics/price/max
+
+		4. Client price min
+		- the client that has spent the least for rent:
+		/api/client/statistics/price/max?ItemStatus=Rented
+
+		- the client that has spent the least to buy:
+		/api/client/statistics/price/max?ItemStatus=Sold
+
+		- the client that has spent the most for rent and buying:
+		/api/client/statistics/price/max
+
+		5. Priority clients history
+		- returns a dictionary with dates and the amounts top n priority clients that has spent to buy for each date in fixed time interval
+		/api/client/statistics/priority/history?ItemStatus=Sold&TopN=5&TimeInterval=Today
+
+		- returns a dictionary with dates and the amounts top n priority clients that has spent to rent for each date in fixed time interval
+		/api/client/statistics/priority/history?ItemStatus=Rented&TopN=5&TimeInterval=Today
+
+		- returns a dictionary with dates and the amounts top n priority clients that has spent to rent or to buy for each date in fixed time interval
+		/api/client/statistics/priority/history?TopN=5&TimeInterval=Today
+
+		6. Priority clients history interval
+		- returns a dictionary with dates and the amounts top n priority clients that has spent to buy for each date in a specific time interval
+		/api/client/statistics/priority/history?ItemStatus=Sold&TopN=5&StartDate=01/07/2025&EndDate=09/07/2025
+
+		- returns a dictionary with dates and the amounts top n priority clients that has spent to rent for each date in a specific time interval
+		/api/client/statistics/priority/history?ItemStatus=Rented&TopN=5&StartDate=01/07/2025&EndDate=09/07/2025
+
+		- returns a dictionary with dates and the amounts top n priority clients that has spent to rent or to buy for each date in a specific time interval
+		/api/client/statistics/priority/history?TopN=5&StartDate=01/07/2025&EndDate=09/07/2025
+
+		7. Clients added
+		-returns a dictionary with dates and the number of clients added in those dates, for a fixed interval
+		/api/client/statistics/added?TimeInterval=Today
+
+		8. Clients added interval
+		-returns a dictionary with dates and the number of clients added in those dates, for a specific interval
+		/api/client/statistics/added?StartDate=01/07/2025&EndDate=09/07/2025
+
+		9. Priority Top
+		- returns top n priority clients in a list
+		/api/client/statistics/priority/top?TopN=5
+
+		10. Total clients no
+		-return the no of clients
+		/api/client/statistics/total?IsActive=true
+
+
+
+
+
+
 
 
 
