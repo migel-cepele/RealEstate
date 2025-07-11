@@ -1,6 +1,6 @@
 # RealEstateAPI
 
-**Web application with .NET Core 8.0 API and Angular v18**
+**.NET Core 8.0 API**
 
 ## Table of Contents
 
@@ -131,14 +131,12 @@ A full set of endpoints for items and clients statistics, e.g.:
 ---
 
 ## Technologies Used
-
-- **Backend**: .NET Core 8.0
-- **Frontend**: Angular v18
+- **API**: .NET Core 8.0
 - **Database**: Configurable (default: SQL Server; can be changed in `appsettings.json`)
 - **ORM**: Entity Framework Core
 - **Dependency Injection**: Built-in .NET Core DI
 - **API Documentation**: Swagger (optional, configure as needed)
-- **Other**: SCSS, HTML, TypeScript
+- **Other**: FastEndpoints
 
 ---
 
@@ -147,11 +145,9 @@ A full set of endpoints for items and clients statistics, e.g.:
 ### Prerequisites
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [Node.js (for Angular)](https://nodejs.org/) (recommended v18+)
-- [Angular CLI](https://angular.io/cli)
 - SQL Server or compatible database
 
-### Backend Setup
+### Setup
 
 1. **Clone the repository:**
    ```bash
