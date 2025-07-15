@@ -1,10 +1,11 @@
 import { Component, inject, AfterContentInit } from '@angular/core';
-import { HousingLocationComponent } from '../housing-location/housing-location.component';
-import { House } from '../../interfaces/house';
-import { NgFor } from '@angular/common';
-import { HousingService } from '../../services/house.service';
-import { addHouse } from '../../store/house/house.actions';
-import { HouseFacade } from '../../store/house/house.facade';
+//import { HousingLocationComponent } from '../housing-location/housing-location.component';
+//import { House } from '../../interfaces/house';
+//import { NgFor } from '@angular/common';
+//import { HousingService } from '../../services/house.service';
+//import { addHouse } from '../../store/house/house.actions';
+//import { HouseFacade } from '../../store/house/house.facade';
+import { ButtonModule} from 'primeng/button';
 
 
 
@@ -12,11 +13,17 @@ import { HouseFacade } from '../../store/house/house.facade';
   selector: 'app-home',
   templateUrl: './home.component.html',
   standalone: true,
-  imports: [HousingLocationComponent, NgFor],
+  imports: [
+    //HousingLocationComponent, 
+    //NgFor, 
+    ButtonModule
+  ],
   styleUrl: './home.component.scss'
 })
 
-export class HomeComponent implements AfterContentInit {
+export class HomeComponent {}
+
+/*export class HomeComponent implements AfterContentInit {
   private readonly houseFacade: HouseFacade = inject(HouseFacade);
 
   housingLocationList: House[] = [];
@@ -24,10 +31,7 @@ export class HomeComponent implements AfterContentInit {
 
   constructor(private housingService: HousingService) {
 
-    /*this.housingService.getAllHousingLocations().then(locations => {
-      this.housingLocationList = locations;
-      this.filteredLocationList = locations;
-    });*/
+
     this.houseFacade.getHouses();
 
     this.houseFacade.houses$.subscribe(locations => {
@@ -68,4 +72,4 @@ export class HomeComponent implements AfterContentInit {
       return matchesCity && matchesName;
     });
   }
-}
+}*/

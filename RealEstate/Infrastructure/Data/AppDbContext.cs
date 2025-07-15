@@ -13,5 +13,6 @@ namespace RealEstate.API.Infrastructure.Data
         public DbSet<Client> Clients { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ClientItem> ClientItems { get; set; }
+        public DbSet<ItemImage> ItemImages { get; set; }
     }
 }

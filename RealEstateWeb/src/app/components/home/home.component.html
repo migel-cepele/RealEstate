@@ -1,17 +1,21 @@
-<section>
+<!--<section>
     <form>
-        <!-- 
+        
             #filter is a template reference variable that allows access to the input element in the component's template.
             It can be used to retrieve the current value of the input or interact with the element in event handlers or component logic.
-        -->
+        
         <input type="text" placeholder="Filter by city" #filterCity />
         <input type="text" placeholder="Filter by house name" #filterName />
         <button class="primary" type="button" (click)="filterResults(filterCity.value, filterName.value)">Search</button>
+            <div class="card flex justify-center">
+        <p-button label="Check" />
+    </div>
+
     </form>
 </section>
-<section class="results">
+<section>
     <app-housing-location 
         *ngFor="let housingLocation of filteredLocationList"
         [housingLocation]="housingLocation">
     </app-housing-location>
-</section>
+</section>-->

@@ -33,9 +33,9 @@ namespace RealEstate.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Item item)
+        public async Task<IActionResult> Add([FromBody] Item item, List<ItemImage> itemImages)
         {
-            var result = _itemService.Add(item);
+            var result = await _itemService.Add(item, itemImages);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);

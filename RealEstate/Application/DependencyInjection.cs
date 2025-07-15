@@ -16,6 +16,8 @@ namespace RealEstate.API.Application
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IClientItemRepository, ClientItemRepository>();
+            services.AddScoped<IItemImageRepository, ItemImageRepository>();
+
 
             // Register services
             services.AddScoped<HouseService>();
@@ -27,6 +29,7 @@ namespace RealEstate.API.Application
             services.AddScoped<LoanService>();
             services.AddScoped<ItemStatisticsService>();
             services.AddScoped<ClientStatisticsService>();
+            services.AddScoped<ItemImageService>();
 
             return services;
         }
